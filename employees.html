@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+    <style>
+        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 5px; }
+        input[type="text"] { margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Employee List</h1>
+    <table id="empTable">
+        <thead>
+            <tr>
+                <th>ID</th><th>Name</th><th>Email</th><th>Department</th><th>Joining Date</th><th>Gender</th><th>Employment Type</th><th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>EMP001</td><td>John Doe</td><td>john@example.com</td><td>IT</td><td>2024-01-01</td><td>Male</td><td>Full-Time</td>
+                <td><button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button></td>
+            </tr>
+            <tr>
+                <td>EMP002</td><td>Jane Smith</td><td>jane@example.com</td><td>HR</td><td>2023-12-15</td><td>Female</td><td>Part-Time</td>
+                <td><button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button></td>
+            </tr>
+            <!-- Add more rows as needed -->
+        </tbody>
+    </table>
+
+    <h3>Edit Employee</h3>
+    <input type="text" id="e1" placeholder="ID">
+    <input type="text" id="e2" placeholder="Name">
+    <input type="text" id="e3" placeholder="Email">
+    <input type="text" id="e4" placeholder="Department">
+    <input type="text" id="e5" placeholder="Joining Date">
+    <input type="text" id="e6" placeholder="Gender">
+    <input type="text" id="e7" placeholder="Employment Type">
+    <button onclick="saveEdit()">Save</button>
+
+    <script>
+        let currentRow = null;
+
+        function deleteRow(btn) {
+            const row = btn.parentNode.parentNode;
+            row.remove();
+        }
+
+        function editRow(btn) {
+            currentRow = btn.parentNode.parentNode;
+            const cells = currentRow.children;
+            for (let i = 0; i < 7; i++) {
+                document.getElementById('e' + (i + 1)).value = cells[i].innerText;
+            }
+        }
+
+        function saveEdit() {
+            if (!currentRow) return;
+            for (let i = 0; i < 7; i++) {
+                currentRow.children[i].innerText = document.getElementById('e' + (i + 1)).value;
+            }
+            currentRow = null;
+        }
+    </script>
+</body>
+</html>

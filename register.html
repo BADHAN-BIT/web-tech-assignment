@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Employee</title>
+    <style>
+        form { margin-bottom: 20px; }
+        label { display: block; margin-top: 10px; }
+        .error { color: red; }
+        .info { margin-top: 20px; background: #f0f0f0; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Employee Registration Form</h1>
+    <form id="employeeForm">
+        <label>Employee ID: <input type="text" id="empId"></label>
+        <label>Full Name: <input type="text" id="fullName"></label>
+        <label>Email: <input type="text" id="email"></label>
+        <label>Department:
+            <select id="department">
+                <option value="">Select</option>
+                <option>HR</option>
+                <option>Sales</option>
+                <option>IT</option>
+                <option>Marketing</option>
+            </select>
+        </label>
+        <label>Joining Date: <input type="date" id="joiningDate"></label>
+        <label>Gender:
+            <input type="radio" name="gender" value="Male">Male
+            <input type="radio" name="gender" value="Female">Female
+        </label>
+        <label>
+            <input type="checkbox" id="fullTime"> Full-Time
+        </label>
+        <br>
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+
+    <div id="result" class="info"></div>
+
+    <script>
+        document.getElementById('employeeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const id = document.getElementById('empId').value.trim();
+            const name = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const dept = document.getElementById('department').value;
+            const date = document.getElementById('joiningDate').value;
+            const genderElems = document.getElementsByName('gender');
+            const fullTime = document.getElementById('fullTime').checked;
+
+            let gender = '';
+            for (let g of genderElems) {
+                if (g.checked) gender = g.value;
+            }
+
+            // Validation
+            if (!/^EMP\d{3}$/.test(id)) return alert('Employee ID must start with EMP and have 3 digits.');
+            if (!/^[A-Za-z\s]+$/.test(name)) return alert('Name should contain only letters and spaces.');
+            if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return alert('Invalid email format.');
+            if (!dept) return alert('Please select a department.');
+            if (!date) return alert('Joining date is required.');
+            if (!gender) return alert('Please select gender.');
+
+            // Show result
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <strong>Employee Registered:</strong><br>
+                ID: ${id}<br>
+                Name: ${name}<br>
+                Email: ${email}<br>
+                Department: ${dept}<br>
+                Joining Date: ${date}<br>
+                Gender: ${gender}<br>
+                Employment Type: ${fullTime ? 'Full-Time' : 'Part-Time'}
+            `;
+        });
+    </script>
+</body>
+</html>
